@@ -33,13 +33,13 @@ public class StepDefinitions {
 //    @Step
     @Then("The user validates all e-mails")
     public void the_user_validates_all_e_mails() {
+        RestAssured.basePath = "/comments/";
         List post_id_list = the_user_gets_all_user_posts_by_user_id();
         System.out.println("List of all User Post IDs....."+post_id_list);
-        RestAssured.basePath = "/comments/";
         Response response = SerenityRest.given().when().queryParam("id", post_id_list).get();
         List email = response.then().extract().path("email");
         response.then().assertThat().body("email", is(email));
-        for (int j = 0; j < email.size(); j++)
+         for (int j = 0; j < email.size(); j++)
         {
             System.out.println(email.get(j)+ ", Is Valid e-mail ");
             int statusCode = response.getStatusCode();
