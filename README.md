@@ -18,15 +18,15 @@ This inscructions on how to run the Serenity with BDD test cases
 
 ## Prerequisites
  
-Cucumber
+- Cucumber
 
-Core Serenity dependency
+- Core Serenity dependency
 
-JUnit Serenity dependency
+- JUnit Serenity dependency
 
-The Maven Failsafe plugin
+- The Maven Failsafe plugin
 
-The Serenity Maven Plugin
+- The Serenity Maven Plugin
 
 
 ## Executing the tests
