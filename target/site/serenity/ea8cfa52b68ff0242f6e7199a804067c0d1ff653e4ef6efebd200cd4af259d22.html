@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Validate all returned e-mails</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<!--[if IE 7]>
+<!--<link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css">-->
+
+<link rel="stylesheet" type="text/css" href="fontawesome-free-5.7.2-web/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="fontawesome-free-5.7.2-web/css/v4-shims.min.css">
+
+<!-- JQuery -->
+<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script><link rel="stylesheet" type="text/css" href="chartist/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.css">
+<link rel="stylesheet" type="text/css" href="chartist/dist/chartist.min.css">
+<script src="chartist/dist/chartist.min.js"></script>
+<script src="chartist/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js"></script>
+<!-- Required Stylesheets -->
+<link href="bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet">
+
+<!-- Required Javascript -->
+<script src="bootstrap-treeview/dist/bootstrap-treeview.min.js"></script><!-- DataTables -->
+<link type="text/css" href="datatables/1.10.20/datatables.min.css" rel="stylesheet" />
+<script type="text/javascript" src="datatables/1.10.20/datatables.min.js"></script>
+<script type="text/javascript" src="datatables/1.10.20/time-elapsed-dhms.js"></script>
+
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="datatables/1.10.20/datatables.bootstrap4.min.js"></script>
+<link type="text/css" href="datatables/1.10.20/datatables.bootstrap4.min.css" rel="stylesheet" />
+
+<script>
+    jQuery.fn.dataTable.ext.type.order['time-elapsed-dhms-pre'] = function(data) {
+
+        var matches = data.match(/^(\d+(?:\.\d+)?)\s*([a-z]+)/i);
+        var multipliers = {
+            ms: 1,
+            s: 1000,
+            m: 60000,
+            h: 3600000,
+            d: 86400000
+        };
+
+        if (matches) {
+            var multiplier = multipliers[matches[2].toLowerCase()];
+            return parseFloat(matches[1]) * multiplier;
+        } else {
+            return -1;
+        };
+    };
+</script>
+<link rel="stylesheet" href="css/core.css"/>
+<link rel="stylesheet" href="css/link.css"/>
+<link type="text/css" media="screen" href="css/screen.css" rel="Stylesheet"/><!-- JQuery-UI -->
+<link type="text/css" href="jqueryui/1.11.2-start/jquery-ui.min.css" rel="Stylesheet" />
+<script type="text/javascript" src="jqueryui/1.11.2-start/jquery-ui.min.js"></script><!-- DataTables -->
+<link type="text/css" href="datatables/1.10.20/datatables.min.css" rel="stylesheet" />
+<script type="text/javascript" src="datatables/1.10.20/datatables.min.js"></script>
+<script type="text/javascript" src="datatables/1.10.20/time-elapsed-dhms.js"></script>
+
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="datatables/1.10.20/datatables.bootstrap4.min.js"></script>
+<link type="text/css" href="datatables/1.10.20/datatables.bootstrap4.min.css" rel="stylesheet" />
+
+<script>
+    jQuery.fn.dataTable.ext.type.order['time-elapsed-dhms-pre'] = function(data) {
+
+        var matches = data.match(/^(\d+(?:\.\d+)?)\s*([a-z]+)/i);
+        var multipliers = {
+            ms: 1,
+            s: 1000,
+            m: 60000,
+            h: 3600000,
+            d: 86400000
+        };
+
+        if (matches) {
+            var multiplier = multipliers[matches[2].toLowerCase()];
+            return parseFloat(matches[1]) * multiplier;
+        } else {
+            return -1;
+        };
+    };
+</script>
+<!-- ImgPreview -->
+<script src="scripts/imgpreview.full.jquery.js" type="text/javascript"></script>
+</head>
+
+<body class="results-page">
+
+
+<div id="topheader">
+    <div id="topbanner">
+        <div id="logo"><a href="index.html"><img src="images/serenity-logo.png" border="0"/></a></div>
+        <div id="projectname-banner" style="float:right">
+            <span class="projectname">
+                <span class="projecttitle">Serenity with BDD</span>
+                <span class="projectsubtitle"></span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="middlecontent">
+    <div id="contenttop">
+        <div class="middlebg">
+        <span class="breadcrumbs">
+            <a href="index.html" class="breadcrumbs">Home</a>
+
+            > <a href="e26cea82d2afc66112b9da1b1d5feab94fe1e91a99e34cbd2267e2b842d1e43e.html">Validate User E-Mail Address</a>
+        > Validate all returned e-mails
+        </span>
+        </div>
+        <div class="rightbg"></div>
+    </div>
+
+    <div class="clr"></div>
+
+    <!--/* starts second table*/-->
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#"><i class="fa fa-check-square-o"></i> Overall Test Results</a>
+        </li>
+        <li >
+            <a href="capabilities.html"><i class="fa fa-book"></i> Requirements</a>
+        </li>
+        <li >
+            <a href="576946480b52ad056d6f5bddf874399c83582ecf90963cc074a14c70580e7d9f.html"><i class="fa fa-comments-o"></i> Features</a>
+        </li>
+    </ul>
+    <span class="date-and-time"><a href="build-info.html"><i class="fa fa-info-circle"></i></a> Report generated 10-12-2021 23:41</span>
+    <br style="clear:left"/>
+</div>
+    <div class="clr"></div>
+
+
+    <div id="contentbody">
+        <div class="titlebar">
+            <div class="story-title">
+                <table class="outcome-header">
+                    <tr>
+                        <td>
+                                <div>
+                                    <h3 class="discreet-story-header">
+                                        <i class="fa fa-2x fa-comments-o"></i>
+                                        <span class="story-header-title">Validate User E-Mail Address </span>
+                                    </h3>
+
+                                </div>
+
+                        </td>
+                        <td valign="top">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="story-title">
+                <table class="outcome-header">
+                    <tr>
+                        <td colspan="2" class="test-title-bar">
+                            <span class="outcome-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon fa-2x' title='SUCCESS'></i></a></span>
+                            <span class="test-case-title">
+                                <span class="success-color">
+                                    Validate all returned e-mails
+                                        <span class="related-issue-title"></span>
+                                </span>
+                            </span>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <div class="clr"></div>
+
+
+    <div id="beforetable"></div>
+
+
+    <div id="tablecontents">
+        <div>
+            <table class="step-table">
+                <tr class="step-titles">
+                    <th width="65">
+                    </th>
+                    <th class="step-description-column greentext">
+                        Steps
+                    </th>
+
+                    <th width="130" class="greentext">Outcome</th>
+                    <th width="100" class="greentext"><i title="Duration" class="far fa-clock"></i></th>
+                </tr>
+                <tr class="step-table-separator">
+                    <td colspan="5"></td>
+                </tr>
+
+                    <tr class="test-SUCCESS">
+
+                        <td width="50" class="step-icon">
+                            <a name="0"></a>
+                                <span style="margin-left: 20px;"
+                                      class="top-level-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a>
+                                </span>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                    <span class="top-level-step">
+                                                Given The user sets json placeholder API
+                                        </span>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="top-level-step">SUCCESS</span></td>
+                        <td width="100"><span class="top-level-step">724ms</span></td>
+                    </tr>
+                    <tr class="test-SUCCESS">
+
+                        <td width="50" class="step-icon">
+                            <a name="1"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection1 success-icon"
+                                       style="margin-left: 20px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1')"
+                                   style="display:block;">
+                                    <span class="top-level-step">
+                                                When The user gets all user posts by user ID
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="top-level-step">SUCCESS</span></td>
+                        <td width="100"><span class="top-level-step">6s 361ms</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection1" class="step-table-nested" style="display:none;">
+                    <tr class="test-SUCCESS">
+
+                        <td width="70" class="step-icon">
+                            <a name="1-0"></a>
+                                <span style="margin-left: 40px;"
+                                      class="nested-group-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a>
+                                </span>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                    <span class="nested-group-step">
+                                                GET https://jsonplaceholder.typicode.com/posts/?userId=9
+                                        </span>
+                                <span class="evidence">
+                                        <span class="piece-of-evidence">
+                    <span>
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="collapse"
+                                data-target="#restModal-REST-3">
+                            REST Query
+                        </button>
+                    </span>
+                    <!-- Modal -->
+                    <div class="rest-query-details">
+                        <div class="collapse multi-collapse" id="restModal-REST-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>Response</h4>
+                                        <p>URL: https://jsonplaceholder.typicode.com/posts/?userId=9</p>
+                                        <p>Status code: 200</p>
+                                        <p>Content Type: null</p>
+                                        <h4>Request Headers</h4>
+                                        <pre>Accept=*/*</pre>
+                                        <h4>Response Headers</h4>
+                                        <pre>Date: Fri, 10 Dec 2021 21:41:43 GMT<br>Content-Type: application/json; charset=utf-8<br>Transfer-Encoding: chunked<br>Connection: keep-alive<br>x-powered-by: Express<br>x-ratelimit-limit: 1000<br>x-ratelimit-remaining: 999<br>x-ratelimit-reset: 1639160288<br>vary: Origin, Accept-Encoding<br>access-control-allow-credentials: true<br>cache-control: max-age=43200<br>pragma: no-cache<br>expires: -1<br>x-content-type-options: nosniff<br>etag: W/&quot;aa1-7w0ImWAnFGRWG4ZRQUECVBaSqRo&quot;<br>content-encoding: gzip<br>via: 1.1 vegur<br>CF-Cache-Status: HIT<br>Age: 12241<br>Expect-CT: max-age=604800, report-uri=&quot;https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct&quot;<br>Report-To: {&quot;endpoints&quot;:[{&quot;url&quot;:&quot;https:\/\/a.nel.cloudflare.com\/report\/v3?s=3YTtrXnt8scSSO5hsIfQriF4CqotfUTXQj7yWwh1RFYwH9xivmwEVnhG%2BHORrT7YBZ7kXLh1SvmVMSr%2B8X%2FHd5eL1Z4NijlqMZwIqwOz%2BPeWjvrw7hxInEGftmI2lTuhqcgsf68h5MkCOnO2b3sS&quot;}],&quot;group&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}<br>NEL: {&quot;success_fraction&quot;:0,&quot;report_to&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}<br>Server: cloudflare<br>CF-RAY: 6bb9a3915df91940-BCN<br>alt-svc: h3=&quot;:443&quot;; ma=86400, h3-29=&quot;:443&quot;; ma=86400, h3-28=&quot;:443&quot;; ma=86400, h3-27=&quot;:443&quot;; ma=86400</pre>
+                                    <h4>Response Body</h4>
+                                        <pre>[<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 81,<br>        &quot;title&quot;: &quot;tempora rem veritatis voluptas quo dolores vero&quot;,<br>        &quot;body&quot;: &quot;facere qui nesciunt est voluptatum voluptatem nisi\nsequi eligendi necessitatibus ea at rerum itaque\nharum non ratione velit laboriosam quis consequuntur\nex officiis minima doloremque voluptas ut aut&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 82,<br>        &quot;title&quot;: &quot;laudantium voluptate suscipit sunt enim enim&quot;,<br>        &quot;body&quot;: &quot;ut libero sit aut totam inventore sunt\nporro sint qui sunt molestiae\nconsequatur cupiditate qui iste ducimus adipisci\ndolor enim assumenda soluta laboriosam amet iste delectus hic&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 83,<br>        &quot;title&quot;: &quot;odit et voluptates doloribus alias odio et&quot;,<br>        &quot;body&quot;: &quot;est molestiae facilis quis tempora numquam nihil qui\nvoluptate sapiente consequatur est qui\nnecessitatibus autem aut ipsa aperiam modi dolore numquam\nreprehenderit eius rem quibusdam&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 84,<br>        &quot;title&quot;: &quot;optio ipsam molestias necessitatibus occaecati facilis veritatis dolores aut&quot;,<br>        &quot;body&quot;: &quot;sint molestiae magni a et quos\neaque et quasi\nut rerum debitis similique veniam\nrecusandae dignissimos dolor incidunt consequatur odio&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 85,<br>        &quot;title&quot;: &quot;dolore veritatis porro provident adipisci blanditiis et sunt&quot;,<br>        &quot;body&quot;: &quot;similique sed nisi voluptas iusto omnis\nmollitia et quo\nassumenda suscipit officia magnam sint sed tempora\nenim provident pariatur praesentium atque animi amet ratione&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 86,<br>        &quot;title&quot;: &quot;placeat quia et porro iste&quot;,<br>        &quot;body&quot;: &quot;quasi excepturi consequatur iste autem temporibus sed molestiae beatae\net quaerat et esse ut\nvoluptatem occaecati et vel explicabo autem\nasperiores pariatur deserunt optio&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 87,<br>        &quot;title&quot;: &quot;nostrum quis quasi placeat&quot;,<br>        &quot;body&quot;: &quot;eos et molestiae\nnesciunt ut a\ndolores perspiciatis repellendus repellat aliquid\nmagnam sint rem ipsum est&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 88,<br>        &quot;title&quot;: &quot;sapiente omnis fugit eos&quot;,<br>        &quot;body&quot;: &quot;consequatur omnis est praesentium\nducimus non iste\nneque hic deserunt\nvoluptatibus veniam cum et rerum sed&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 89,<br>        &quot;title&quot;: &quot;sint soluta et vel magnam aut ut sed qui&quot;,<br>        &quot;body&quot;: &quot;repellat aut aperiam totam temporibus autem et\narchitecto magnam ut\nconsequatur qui cupiditate rerum quia soluta dignissimos nihil iure\ntempore quas est&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 90,<br>        &quot;title&quot;: &quot;ad iusto omnis odit dolor voluptatibus&quot;,<br>        &quot;body&quot;: &quot;minus omnis soluta quia\nqui sed adipisci voluptates illum ipsam voluptatem\neligendi officia ut in\neos soluta similique molestias praesentium blanditiis&quot;<br>    }<br>]</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                        </span>
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-group-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-group-step">011ms</span></td>
+                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                    <tr class="test-SUCCESS">
+
+                        <td width="50" class="step-icon">
+                            <a name="2"></a>
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection2')"
+                                   style="display:block">
+                                    <i class="fa fa-plus-square-o imgstepSection2 success-icon"
+                                       style="margin-left: 20px; float:left; padding-right:5px"></i>
+                                </a>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                <a href="javaScript:void(0)" onClick="toggleDiv('stepSection2')"
+                                   style="display:block;">
+                                    <span class="top-level-step">
+                                                Then The user validates all e-mails
+                                        </span>
+                                </a>
+                                <span class="evidence">
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="top-level-step">SUCCESS</span></td>
+                        <td width="100"><span class="top-level-step">1s 220ms</span></td>
+                    </tr>
+                        <tr>
+                            <td colspan="5">
+                                <table id="stepSection2" class="step-table-nested" style="display:none;">
+                    <tr class="test-SUCCESS">
+
+                        <td width="70" class="step-icon">
+                            <a name="2-0"></a>
+                                <span style="margin-left: 40px;"
+                                      class="nested-group-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a>
+                                </span>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                    <span class="nested-group-step">
+                                                GET https://jsonplaceholder.typicode.com/posts/?userId=9
+                                        </span>
+                                <span class="evidence">
+                                        <span class="piece-of-evidence">
+                    <span>
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="collapse"
+                                data-target="#restModal-REST-5">
+                            REST Query
+                        </button>
+                    </span>
+                    <!-- Modal -->
+                    <div class="rest-query-details">
+                        <div class="collapse multi-collapse" id="restModal-REST-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>Response</h4>
+                                        <p>URL: https://jsonplaceholder.typicode.com/posts/?userId=9</p>
+                                        <p>Status code: 200</p>
+                                        <p>Content Type: null</p>
+                                        <h4>Request Headers</h4>
+                                        <pre>Accept=*/*</pre>
+                                        <h4>Response Headers</h4>
+                                        <pre>Date: Fri, 10 Dec 2021 21:41:44 GMT<br>Content-Type: application/json; charset=utf-8<br>Transfer-Encoding: chunked<br>Connection: keep-alive<br>x-powered-by: Express<br>x-ratelimit-limit: 1000<br>x-ratelimit-remaining: 999<br>x-ratelimit-reset: 1639160288<br>vary: Origin, Accept-Encoding<br>access-control-allow-credentials: true<br>cache-control: max-age=43200<br>pragma: no-cache<br>expires: -1<br>x-content-type-options: nosniff<br>etag: W/&quot;aa1-7w0ImWAnFGRWG4ZRQUECVBaSqRo&quot;<br>content-encoding: gzip<br>via: 1.1 vegur<br>CF-Cache-Status: HIT<br>Age: 12242<br>Expect-CT: max-age=604800, report-uri=&quot;https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct&quot;<br>Report-To: {&quot;endpoints&quot;:[{&quot;url&quot;:&quot;https:\/\/a.nel.cloudflare.com\/report\/v3?s=mZsTabVrD0olqX%2BEwUdCUF%2F6O5DnQ8NeTlhRj9wDwqOxFIT0rCeQydMLeCo2sDYCRp4gqscG5sFNRw%2FTeV0Td1cJcwRV9iRec9WnbGPXrCuY2ReaPlfJjMag8FiZTVmgjnpJk8dxPjMehqOQW4Xd&quot;}],&quot;group&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}<br>NEL: {&quot;success_fraction&quot;:0,&quot;report_to&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}<br>Server: cloudflare<br>CF-RAY: 6bb9a39a7ea2193e-BCN<br>alt-svc: h3=&quot;:443&quot;; ma=86400, h3-29=&quot;:443&quot;; ma=86400, h3-28=&quot;:443&quot;; ma=86400, h3-27=&quot;:443&quot;; ma=86400</pre>
+                                    <h4>Response Body</h4>
+                                        <pre>[<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 81,<br>        &quot;title&quot;: &quot;tempora rem veritatis voluptas quo dolores vero&quot;,<br>        &quot;body&quot;: &quot;facere qui nesciunt est voluptatum voluptatem nisi\nsequi eligendi necessitatibus ea at rerum itaque\nharum non ratione velit laboriosam quis consequuntur\nex officiis minima doloremque voluptas ut aut&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 82,<br>        &quot;title&quot;: &quot;laudantium voluptate suscipit sunt enim enim&quot;,<br>        &quot;body&quot;: &quot;ut libero sit aut totam inventore sunt\nporro sint qui sunt molestiae\nconsequatur cupiditate qui iste ducimus adipisci\ndolor enim assumenda soluta laboriosam amet iste delectus hic&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 83,<br>        &quot;title&quot;: &quot;odit et voluptates doloribus alias odio et&quot;,<br>        &quot;body&quot;: &quot;est molestiae facilis quis tempora numquam nihil qui\nvoluptate sapiente consequatur est qui\nnecessitatibus autem aut ipsa aperiam modi dolore numquam\nreprehenderit eius rem quibusdam&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 84,<br>        &quot;title&quot;: &quot;optio ipsam molestias necessitatibus occaecati facilis veritatis dolores aut&quot;,<br>        &quot;body&quot;: &quot;sint molestiae magni a et quos\neaque et quasi\nut rerum debitis similique veniam\nrecusandae dignissimos dolor incidunt consequatur odio&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 85,<br>        &quot;title&quot;: &quot;dolore veritatis porro provident adipisci blanditiis et sunt&quot;,<br>        &quot;body&quot;: &quot;similique sed nisi voluptas iusto omnis\nmollitia et quo\nassumenda suscipit officia magnam sint sed tempora\nenim provident pariatur praesentium atque animi amet ratione&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 86,<br>        &quot;title&quot;: &quot;placeat quia et porro iste&quot;,<br>        &quot;body&quot;: &quot;quasi excepturi consequatur iste autem temporibus sed molestiae beatae\net quaerat et esse ut\nvoluptatem occaecati et vel explicabo autem\nasperiores pariatur deserunt optio&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 87,<br>        &quot;title&quot;: &quot;nostrum quis quasi placeat&quot;,<br>        &quot;body&quot;: &quot;eos et molestiae\nnesciunt ut a\ndolores perspiciatis repellendus repellat aliquid\nmagnam sint rem ipsum est&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 88,<br>        &quot;title&quot;: &quot;sapiente omnis fugit eos&quot;,<br>        &quot;body&quot;: &quot;consequatur omnis est praesentium\nducimus non iste\nneque hic deserunt\nvoluptatibus veniam cum et rerum sed&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 89,<br>        &quot;title&quot;: &quot;sint soluta et vel magnam aut ut sed qui&quot;,<br>        &quot;body&quot;: &quot;repellat aut aperiam totam temporibus autem et\narchitecto magnam ut\nconsequatur qui cupiditate rerum quia soluta dignissimos nihil iure\ntempore quas est&quot;<br>    },<br>    {<br>        &quot;userId&quot;: 9,<br>        &quot;id&quot;: 90,<br>        &quot;title&quot;: &quot;ad iusto omnis odit dolor voluptatibus&quot;,<br>        &quot;body&quot;: &quot;minus omnis soluta quia\nqui sed adipisci voluptates illum ipsam voluptatem\neligendi officia ut in\neos soluta similique molestias praesentium blanditiis&quot;<br>    }<br>]</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                        </span>
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-group-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-group-step"></span></td>
+                    </tr>
+                    <tr class="test-SUCCESS">
+
+                        <td width="70" class="step-icon">
+                            <a name="2-1"></a>
+                                <span style="margin-left: 40px;"
+                                      class="nested-group-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a>
+                                </span>
+                        </td>
+
+                        <td class="step-description-column">
+                            <div class="step-description">
+                                    <span class="nested-group-step">
+                                                GET https://jsonplaceholder.typicode.com/comments/?id=81&amp;id=82&amp;id=83&amp;id=84&amp;id=85&amp;id=86&amp;id=87&amp;id=88&amp;id=89&amp;id=90
+                                        </span>
+                                <span class="evidence">
+                                        <span class="piece-of-evidence">
+                    <span>
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="collapse"
+                                data-target="#restModal-REST-6">
+                            REST Query
+                        </button>
+                    </span>
+                    <!-- Modal -->
+                    <div class="rest-query-details">
+                        <div class="collapse multi-collapse" id="restModal-REST-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>Response</h4>
+                                        <p>URL: https://jsonplaceholder.typicode.com/comments/?id=81&id=82&id=83&id=84&id=85&id=86&id=87&id=88&id=89&id=90</p>
+                                        <p>Status code: 200</p>
+                                        <p>Content Type: null</p>
+                                        <h4>Request Headers</h4>
+                                        <pre>Accept=*/*</pre>
+                                        <h4>Response Headers</h4>
+                                        <pre>Date: Fri, 10 Dec 2021 21:41:45 GMT<br>Content-Type: application/json; charset=utf-8<br>Transfer-Encoding: chunked<br>Connection: keep-alive<br>x-powered-by: Express<br>x-ratelimit-limit: 1000<br>x-ratelimit-remaining: 999<br>x-ratelimit-reset: 1639160108<br>vary: Origin, Accept-Encoding<br>access-control-allow-credentials: true<br>cache-control: max-age=43200<br>pragma: no-cache<br>expires: -1<br>x-content-type-options: nosniff<br>etag: W/&quot;d15-x4f1SCCUS7WH7q/ENg22VhitZAc&quot;<br>content-encoding: gzip<br>via: 1.1 vegur<br>CF-Cache-Status: HIT<br>Age: 12419<br>Expect-CT: max-age=604800, report-uri=&quot;https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct&quot;<br>Report-To: {&quot;endpoints&quot;:[{&quot;url&quot;:&quot;https:\/\/a.nel.cloudflare.com\/report\/v3?s=w58pvX4GwNyGJkH6hq8d4gNiqzNXUNNOukKsl6Kzm%2BvEJXuV7YRuLgzddsHLKkVuZOItaBlz8y4DFHQzLSL6miZwihLrPEixPdRYzyfG8x8BixuiJc5KlQuviKVcrvgEK%2Fs751mT4reBj9cIRJBe&quot;}],&quot;group&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}<br>NEL: {&quot;success_fraction&quot;:0,&quot;report_to&quot;:&quot;cf-nel&quot;,&quot;max_age&quot;:604800}<br>Server: cloudflare<br>CF-RAY: 6bb9a39ecb4b5fdc-MRS<br>alt-svc: h3=&quot;:443&quot;; ma=86400, h3-29=&quot;:443&quot;; ma=86400, h3-28=&quot;:443&quot;; ma=86400, h3-27=&quot;:443&quot;; ma=86400</pre>
+                                    <h4>Response Body</h4>
+                                        <pre>[<br>    {<br>        &quot;postId&quot;: 17,<br>        &quot;id&quot;: 81,<br>        &quot;name&quot;: &quot;aut non consequuntur dignissimos voluptatibus dolorem earum recusandae dolorem&quot;,<br>        &quot;email&quot;: &quot;Newton.Kertzmann@anjali.io&quot;,<br>        &quot;body&quot;: &quot;illum et voluptatem quis repellendus quidem repellat\nreprehenderit voluptas consequatur mollitia\npraesentium nisi quo quod et\noccaecati repellendus illo eius harum explicabo doloribus officia&quot;<br>    },<br>    {<br>        &quot;postId&quot;: 17,<br>        &quot;id&quot;: 82,<br>        &quot;name&quot;: &quot;ea est non dolorum iste nihil est&quot;,<br>        &quot;email&quot;: &quot;Caleb_Herzog@rosamond.net&quot;,<br>        &quot;body&quot;: &quot;officiis dolorem voluptas aliquid eveniet tempora qui\nea temporibus labore accusamus sint\nut sunt necessitatibus voluptatum animi cumque\nat reiciendis voluptatem iure aliquid et qui dolores et&quot;<br>    },<br>    {<br>        &quot;postId&quot;: 17,<br>        &quot;id&quot;: 83,<br>        &quot;name&quot;: &quot;nihil qui accusamus ratione et molestias et minus&quot;,<br>        &quot;email&quot;: &quot;Sage_Mueller@candace.net&quot;,<br>        &quot;body&quot;: &quot;et consequatur voluptates magnam fugit sunt repellendus nihil earum\nofficiis aut cupiditate\net distinctio laboriosam\nmolestiae sunt dolor explicabo recusandae&quot;<br>    },<br>    {<br>        &quot;postId&quot;: 17,<br>        &quot;id&quot;: 84,<br>        &quot;name&quot;: &quot;quia voluptatibus magnam voluptatem optio vel perspiciatis&quot;,<br>        &quot;email&quot;: &quot;Bernie.Bergnaum@lue.com&quot;,<br>        &quot;body&quot;: &quot;ratione ut magni voluptas\nexplicabo natus quia consequatur nostrum aut\nomnis enim in qui illum\naut atque laboriosam aliquid blanditiis quisquam et laborum&quot;<br>    },<br>    {<br>        &quot;postId&quot;: 17,<br>        &quot;id&quot;: 85,<br>        &quot;name&quot;: &quot;non voluptas cum est quis aut consectetur nam&quot;,<br>        &quot;email&quot;: &quot;Alexzander_Davis@eduardo.name&quot;,<br>        &quot;body&quot;: &quot;quisquam incidunt dolores sint qui doloribus provident\nvel cupiditate deleniti alias voluptatem placeat ad\nut dolorem illum unde iure quis libero neque\nea et distinctio id&quot;<br>    },<br>    {<br>        &quot;postId&quot;: 18,<br>        &quot;id&quot;: 86,<br>        &quot;name&quot;: &quot;suscipit est sunt vel illum sint&quot;,<br>        &quot;email&quot;: &quot;Jacquelyn@krista.info&quot;,<br>        &quot;body&quot;: &quot;eum culpa debitis sint\neaque quia magni laudantium qui neque voluptas\nvoluptatem qui molestiae vel earum est ratione excepturi\nsit aut explicabo et repudiandae ut perspiciatis&quot;<br>    },<br>    {<br>        &quot;postId&quot;: 18,<br>        &quot;id&quot;: 87,<br>        &quot;name&quot;: &quot;dolor asperiores autem et omnis quasi nobis&quot;,<br>        &quot;email&quot;: &quot;Grover_Volkman@coty.tv&quot;,<br>        &quot;body&quot;: &quot;assumenda corporis architecto repudiandae omnis qui et odit\nperferendis velit enim\net quia reiciendis sint\nquia voluptas quam deserunt facilis harum eligendi&quot;<br>    },<br>    {<br>        &quot;postId&quot;: 18,<br>        &quot;id&quot;: 88,<br>        &quot;name&quot;: &quot;officiis aperiam odit sint est non&quot;,<br>        &quot;email&quot;: &quot;Jovanny@abigale.ca&quot;,<br>        &quot;body&quot;: &quot;laudantium corrupti atque exercitationem quae enim et veniam dicta\nautem perspiciatis sit dolores\nminima consectetur tenetur iste facere\namet est neque&quot;<br>    },<br>    {<br>        &quot;postId&quot;: 18,<br>        &quot;id&quot;: 89,<br>        &quot;name&quot;: &quot;in voluptatum nostrum voluptas iure nisi rerum est placeat&quot;,<br>        &quot;email&quot;: &quot;Isac_Schmeler@barton.com&quot;,<br>        &quot;body&quot;: &quot;quibusdam rerum quia nostrum culpa\nculpa est natus impedit quo rem voluptate quos\nrerum culpa aut ut consectetur\nsunt esse laudantium voluptatibus cupiditate rerum&quot;<br>    },<br>    {<br>        &quot;postId&quot;: 18,<br>        &quot;id&quot;: 90,<br>        &quot;name&quot;: &quot;eum voluptas dolores molestias odio amet repellendus&quot;,<br>        &quot;email&quot;: &quot;Sandy.Erdman@sabina.info&quot;,<br>        &quot;body&quot;: &quot;vitae cupiditate excepturi eum veniam laudantium aspernatur blanditiis\naspernatur quia ut assumenda et magni enim magnam\nin voluptate tempora\nnon qui voluptatem reprehenderit porro qui voluptatibus&quot;<br>    }<br>]</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                        </span>
+                                </span>
+                            </div>
+                        </td>
+
+                        <td width="130"><span class="nested-group-step">SUCCESS</span></td>
+                        <td width="100"><span class="nested-group-step"></span></td>
+                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                <tr class="test-SUCCESS">
+                        <td colspan="2"></td>
+                    <td width="130"><span class="top-level-step"><em>SUCCESS</em></span></td>
+                    <td width="100"><span class="top-level-step"><em>8.52s</em></span></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <div id="beforefooter"></div>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="version">Serenity BDD version 2.4.51</span>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function toggleDiv(divId) {
+            $("#" + divId).toggle();
+            var imgsrc = $(".img" + divId).attr('src');
+            if (imgsrc == 'images/plus.png') {
+                $(".img" + divId).attr("src", function () {
+                    return "images/minus.png";
+                });
+
+            } else {
+                $(".img" + divId).attr("src", function () {
+                    return "images/plus.png";
+                });
+            }
+        }
+    </script>
+
+
+    <script type="text/javascript">
+        //<![CDATA[
+
+        $(document).ready(function () {
+            $('img.screenshot').imgPreview({
+                imgCSS: {
+                    width: '500px'
+                },
+                distanceFromCursor: {top: 10, left: -200}
+            });
+        });
+
+        //]]>
+    </script>
+    <div id="imgPreviewContainer" style="position: absolute; top: 612px; left: 355px; display: none; " class=""><img
+                src="" style="display: none; "></div>
+    <div id="imgPreviewContainer2" style="position: absolute; top: 925px; left: 320px; display: none; " class="">
+        <img style="width: 200px; display: none; " src=""></div>
+    <div id="imgPreviewWithStyles" style="position: absolute; top: 1272px; left: 321px; display: none; " class="">
+        <img style="height: 200px; opacity: 1; display: none; " src=""></div>
+    <div id="imgPreviewWithStyles2" style="display: none; position: absolute; "><img style="height: 200px; "></div>
+    <div id="imgPreviewWithStyles3" style="display: none; position: absolute; "><img style="height: 200px; "></div>
+
+</div>
+</body>
+</html>
