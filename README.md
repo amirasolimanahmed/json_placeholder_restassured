@@ -12,6 +12,18 @@
 
 - Highly readable, maintainable and scalable automated testing with the Screenplay pattern.
 
+# Feature File 
+
+
+``` 
+Feature: Validate user e-mail address
+  Scenario: Validate all returned e-mails
+    Given The user sets json placeholder API
+    When The user gets all user posts by user ID
+    And The user gets all comments by post ID
+    Then The user validates all e-mails
+```
+
 # How to Run the Test cases 
 
 This inscructions on how to run the Serenity with BDD test cases
