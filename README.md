@@ -26,7 +26,7 @@ Feature: Validate user e-mail address
 
 Serenity With Cucumber Runner Class
 ```
-package steps;
+package starter.steps;
 
 import io.cucumber.junit.CucumberOptions;
 import net.serenitybdd.cucumber.CucumberWithSerenity;
@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
         plugin = {"pretty"},
         features = "classpath:Features"
 )
-public class CucumberTestSuite {}
+public class starter.CucumberTestSuite {}
 
 ```
 
@@ -45,7 +45,7 @@ All Step Definitions
 
 ```
 
-package steps;
+package starter.steps;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

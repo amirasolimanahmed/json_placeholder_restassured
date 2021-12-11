@@ -1,4 +1,4 @@
-package steps;
+package starter;
 
 import io.cucumber.junit.CucumberOptions;
 import net.serenitybdd.cucumber.CucumberWithSerenity;

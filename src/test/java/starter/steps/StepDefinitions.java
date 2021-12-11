@@ -1,11 +1,11 @@
-package steps;
+package starter.steps;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
-import net.thucydides.core.annotations.Step;
+
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 
