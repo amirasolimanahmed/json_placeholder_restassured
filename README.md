@@ -310,8 +310,10 @@ $ git clone https://github.com/amirasolimanahmed/json_placeholder_restassured.gi
 
 $ mvn clean verify
 
-## Generating the reports
 
-$ mvn serenity:aggregate
+### Reports
+Check /target/site/serenity/index.html
+
+
 
 
